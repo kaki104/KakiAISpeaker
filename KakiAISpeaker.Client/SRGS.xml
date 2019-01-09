@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<grammar xml:lang="en-US" root="voiceCommand"
+         tag-format="semantics/1.0" version="1.0"
+         xmlns="http://www.w3.org/2001/06/grammar">
+
+  <rule id="voiceCommand">
+    <one-of>
+      <item>
+        <ruleref uri="#playAction"/>
+        <tag> out.ACTION="BEGIN"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="playAction">
+    <one-of>
+      <item> cleaner </item>
+      <item> ok cleaner </item>
+      <item> hey cleaner </item>
+    </one-of>
+  </rule>
+
+</grammar>
