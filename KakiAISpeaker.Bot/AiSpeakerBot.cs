@@ -42,15 +42,15 @@ namespace KakiAISpeaker.Bot
         public AiSpeakerBot(AiSpeakerBotAccessors accessors, ILoggerFactory loggerFactory,
             SpeechHelper speechHelper, BlobHelper blobHelper, PollyHelper pollyHelper)
         {
-            _speechHelper = speechHelper;
-            _blobHelper = blobHelper;
-            _pollyHelper = pollyHelper;
-
             if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
 
             _logger = loggerFactory.CreateLogger<AiSpeakerBot>();
             _logger.LogTrace("EchoBot turn start.");
             _accessors = accessors ?? throw new ArgumentNullException(nameof(accessors));
+
+            _speechHelper = speechHelper ?? throw new ArgumentNullException(nameof(speechHelper));
+            _blobHelper = blobHelper ?? throw new ArgumentNullException(nameof(blobHelper));
+            _pollyHelper = pollyHelper ?? throw new ArgumentNullException(nameof(pollyHelper));
         }
 
         /// <summary>
