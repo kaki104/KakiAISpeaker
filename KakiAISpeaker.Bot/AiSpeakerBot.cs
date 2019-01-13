@@ -26,20 +26,20 @@ namespace KakiAISpeaker.Bot
     ///     <see cref="IStatePropertyAccessor{T}" /> object are created with a singleton lifetime.
     /// </summary>
     /// <seealso cref="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.1" />
-    public class EchoWithCounterBot : IBot
+    public class AiSpeakerBot : IBot
     {
-        private readonly EchoBotAccessors _accessors;
+        private readonly AiSpeakerBotAccessors _accessors;
         private readonly BlobHelper _blobHelper;
         private readonly ILogger _logger;
         private readonly PollyHelper _pollyHelper;
         private readonly SpeechHelper _speechHelper;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="EchoWithCounterBot" /> class.
+        ///     Initializes a new instance of the <see cref="AiSpeakerBot" /> class.
         /// </summary>
         /// <seealso
         ///     cref="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-2.1#windows-eventlog-provider" />
-        public EchoWithCounterBot(EchoBotAccessors accessors, ILoggerFactory loggerFactory,
+        public AiSpeakerBot(AiSpeakerBotAccessors accessors, ILoggerFactory loggerFactory,
             SpeechHelper speechHelper, BlobHelper blobHelper, PollyHelper pollyHelper)
         {
             _speechHelper = speechHelper;
@@ -48,7 +48,7 @@ namespace KakiAISpeaker.Bot
 
             if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
 
-            _logger = loggerFactory.CreateLogger<EchoWithCounterBot>();
+            _logger = loggerFactory.CreateLogger<AiSpeakerBot>();
             _logger.LogTrace("EchoBot turn start.");
             _accessors = accessors ?? throw new ArgumentNullException(nameof(accessors));
         }
@@ -146,7 +146,6 @@ namespace KakiAISpeaker.Bot
             }
         }
 
-
         private async Task<IMessageActivity> GetResponseFromSpeechResultAsync(ITurnContext turnContext,
             SpeechResult speechResult)
         {
@@ -175,9 +174,9 @@ namespace KakiAISpeaker.Bot
             else if (speechResult.DisplayText.Contains("오늘 날씨") || speechResult.DisplayText.Contains("오늘날씨") ||
                      speechResult.DisplayText.Contains("오늘의날씨"))
             {
-                //날씨 api를 조회해서 결과 반환 - 하루에 한번 날짜로 파일명 생성
-                //해당 내용을 AWS를 이용해서 음성으로 변환
-                //변환된 mp3 파일을 Blob에 올리고 경로 반환
+                //날씨 api를 조회해서 결과 반환 - 일자시간으로 파일명 구성해서 저장
+                //일자시간에 해당하는 내용이 있는지 확인해서 없으면 음성 생성하고 BLOB에 업로드 후 경로 반환
+                //있으면 해당 음성 파일 경로 반환
                 var weatherAttachment = await MakeAttachmentAsync("오늘날씨");
                 reply.Text = "today weather message";
                 reply.Attachments.Add(weatherAttachment);
@@ -186,6 +185,9 @@ namespace KakiAISpeaker.Bot
                      speechResult.DisplayText.Contains("미세먼지정보") || speechResult.DisplayText.Contains("미세먼지") ||
                      speechResult.DisplayText.Contains("미세 먼지"))
             {
+                //미세먼지 정보를 조회해서 음성 정보로 생성 - 일자시간으로 파일명 구성해서 저장
+                //일자시간에 해당하는 내용이 있는지 확인해서 없으면 음성 생성하고 BLOB에 업로드 후 경로 반환
+                //있으면 해당 음성 파일 경로 반환
                 var dustAttachment = await MakeAttachmentAsync("미세먼지정보");
                 reply.Text = "today dust message";
                 reply.Attachments.Add(dustAttachment);

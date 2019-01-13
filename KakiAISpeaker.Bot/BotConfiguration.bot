@@ -1,24 +1,24 @@
 {
     "name": "KakiAISpeaker.Bot",
     "description": "",
-    "services": [
-      {
-        "type": "endpoint",
-        "appId": "",
-        "appPassword": "",
-        "endpoint": "http://localhost:3978/api/messages",
-        "id": "1",
-        "name": "development"
-      },
-      {
-        "type": "endpoint",
-        "appId": "",
-        "appPassword": "",
-        "endpoint": "https://kakiaispeakerbot.azurewebsites.net/api/messages",
-        "name": "kakiaispeaker",
-        "id": "105"
-      }
-    ],
+  "services": [
+    {
+      "type": "endpoint",
+      "appId": "",
+      "appPassword": "",
+      "endpoint": "http://localhost:3978/api/messages",
+      "id": "1",
+      "name": "development"
+    },
+    {
+      "type": "endpoint",
+      "appId": "1b13c615-3f75-4d38-8c67-0b5a602acefb",
+      "appPassword": "qfbxnNIP560?{[cxKXKA16-",
+      "endpoint": "https://kakiaispeakerbot.azurewebsites.net/api/messages",
+      "name": "kakiaispeaker",
+      "id": "105"
+    }
+  ],
     "padlock": "",
     "version": "2.0",
     "path": "C:\\Users\\kaki1\\Source\\Repos\\KakiAISpeaker\\KakiAISpeaker.Bot\\BotConfiguration.bot",
